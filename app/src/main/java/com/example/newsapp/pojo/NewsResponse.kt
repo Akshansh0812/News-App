@@ -1,4 +1,6 @@
-package com.example.newsapp
+package com.example.newsapp.pojo
+
+import com.example.newsapp.pojo.Article
 
 data class NewsResponse(
     val articles: List<Article>,

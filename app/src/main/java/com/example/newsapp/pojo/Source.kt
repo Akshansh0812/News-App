@@ -1,4 +1,4 @@
-package com.example.newsapp
+package com.example.newsapp.pojo
 
 data class Source(
     val id: String,
