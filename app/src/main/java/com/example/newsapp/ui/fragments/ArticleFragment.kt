@@ -5,31 +5,41 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.newsapp.R
+import android.webkit.WebViewClient
+import androidx.navigation.fragment.navArgs
+import com.example.newsapp.databinding.FragmentArticleBinding
 import com.example.newsapp.ui.MainActivity
 import com.example.newsapp.viewModels.NewsViewModel
 
 
 class ArticleFragment : Fragment() {
 
+    private lateinit var binding : FragmentArticleBinding
     private lateinit var viewModel: NewsViewModel
+    private val args : ArticleFragmentArgs by navArgs()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        viewModel = (activity as MainActivity).viewModel
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_article, container, false)
+        binding = FragmentArticleBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = (activity as MainActivity).viewModel
+
+        val article = args.article
+        binding.webView.apply {
+            webViewClient = WebViewClient()
+            loadUrl(article.url)
+        }
     }
 
 }
