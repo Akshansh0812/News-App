@@ -26,13 +26,11 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel(){
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
-
     fun searchNews(searchQuery: String) = viewModelScope.launch{
         searchNews.postValue(Resource.Loading())
         val response = newsRepository.searchNews(searchQuery, searchNewsPage)
         searchNews.postValue(handleSearchNewsResponse(response))
     }
-
     private fun handleBreakingNewsResponse(response: Response<NewsResponse>):Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let{resultResponse->
@@ -41,7 +39,6 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel(){
         }
         return Resource.Error(response.message())
     }
-
     private fun handleSearchNewsResponse(response: Response<NewsResponse>):Resource<NewsResponse>{
         if(response.isSuccessful){
             response.body()?.let{resultResponse->
@@ -50,13 +47,12 @@ class NewsViewModel(private val newsRepository: NewsRepository) : ViewModel(){
         }
         return Resource.Error(response.message())
     }
-
+    // these methods are defined here so that our fragments can use
     fun saveArticle(article: Article) = viewModelScope.launch {
-        newsRepository.upsert(article)
+        newsRepository.upsert(article) // to save item when click on save button
     }
-    fun getSavedNews() = newsRepository.getSavedNews()
-
+    fun getSavedNews() = newsRepository.getSavedNews() // to observe the changes in database
     fun deleteArticle(article: Article) = viewModelScope.launch {
-        newsRepository.deleteArticle(article)
+        newsRepository.deleteArticle(article) // to delete the save items
     }
 }
