@@ -72,7 +72,7 @@ class SavedNewsFragment : Fragment() {
                 }
             }
         }
-        
+
         ItemTouchHelper(itemTouchHelperCallback).apply {
             attachToRecyclerView(binding.rvSavedNews)
         }
